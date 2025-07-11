@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>rock/paper/scissors</title>
+    </head>
+    <body>
+        <div align="center">
+            <h1>Date of user </h1>
+            <h2>Name: {{.UserName}}</h2>
+        </div>
+        <div align="center">
+            <h1>Change name</h1>
+                <form action="/rename" method="post">
+                <label for="name">Name:</label>
+                    <input  type="text" id="name" name="name" required>
+                <br>
+                    <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div align="center">
+            <h1>Clear result</h1>
+            <form align="center" action="/clear" method="post">
+            <button type="submit">Clear</button>
+            </form>
+        </div>
+    </body>
+</html>

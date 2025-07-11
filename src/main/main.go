@@ -5,18 +5,17 @@ import (
 	"html/template"
 	"math/rand/v2"
 	"net/http"
-	"strings"
 )
 
 type Score struct {
-	StateWINER int
-	StateLOSSER  int
-    StateDROW int
+	StateWINER  int
+	StateLOSSER int
+	StateDROW   int
 }
 
-type User struct{
-    Name string
-    Password string
+type User struct {
+	UserName string
+	Password string
 }
 
 const ROCK = "rock"
@@ -24,17 +23,16 @@ const PAPER = "paper"
 const SCISSORS = "scissors"
 const WINER = "winer"
 const LOSSER = "losser"
-const DROW = "drow"
+const DROW = "draw"
 
 var stateWINER int = 0
 var stateLOSSER int = 0
-var stateDROW int = 0
-var name string = "bot"
+var stateDRAW int = 0
+var userName string = "bot"
 
 func main() {
 	// Регистрируем обработчик для всех запросов
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-
 		if r.Method == http.MethodGet {
 			data := ""
 			tmpl, _ := template.ParseFiles("templates/root.html")
@@ -42,20 +40,19 @@ func main() {
 		} else if r.Method == http.MethodPost {
 			http.Redirect(w, r, "/game", http.StatusMovedPermanently)
 		}
-
 	})
 
-	//TODO: Вставка   Post  Оотправка rock, paper, scissors
+	//Вставка   Post  Оотправка rock, paper, scissors
 	// /game/<rock/paper/scissors>
 	http.HandleFunc("/game", addChoice)
 
-	//TODO: Удаление  Delete Отчиска счета
+	//Удаление  Delete Отчиска счета
 	http.HandleFunc("/clear", clearCost)
 
-	//TODO: Изменение Put  Изменить имя
+	//Изменение Put  Изменить имя
 	http.HandleFunc("/rename", rename)
 
-	//TODO: Выбору продукта GET Выбрать
+	//Выбору продукта GET Выбрать
 
 	// Запускаем сервер на порту 8080
 	fmt.Println("Starting server at port 8080")
@@ -63,77 +60,145 @@ func main() {
 	if err != nil {
 		fmt.Println("Error starting the server:", err)
 	}
-    
+
 }
 
 func addChoice(w http.ResponseWriter, r *http.Request) {
-	name := r.URL.Query().Get("chose")
+	choseOf := r.URL.Query().Get("chose")
+	user := User{
+		UserName: userName,
+		Password: "123",
+	}
 
 	//parametrsOfRequest := r.URL.RawQuery
-	switch name {
+	switch choseOf {
 	case ROCK:
 		{
-			t1, t2 := gameOne(ROCK)
+			_, t2 := gameOne(ROCK)
 			scoreOfGame(t2)
-			fmt.Fprintf(w, "You = "+ROCK+" AI = "+t1+" State = "+t2)
-			fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
+			// fmt.Fprintf(w, "You = "+ROCK+" AI = "+t1+" State = "+t2)
+			// fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
+
+			tmplSettings, _ := template.ParseFiles("templates/gamePage/settings.html")
+			tmplSettings.Execute(w, user)
+			data := Score{
+				StateWINER:  stateWINER,
+				StateLOSSER: stateLOSSER,
+				StateDROW:   stateDRAW,
+			}
+			tmplStore, _ := template.ParseFiles("templates/gamePage/store.html")
+			tmplStore.Execute(w, data)
+
+			stateOf := struct {
+				State string
+			}{
+				State: t2,
+			}
+			tmplState, _ := template.ParseFiles("templates/gamePage/state.html")
+			tmplState.Execute(w, stateOf)
+
+			tmplGame, _ := template.ParseFiles("templates/gamePage/game.html")
+			tmplGame.Execute(w, data)
 		}
 	case PAPER:
 		{
-			t1, t2 := gameOne(PAPER)
+			_, t2 := gameOne(PAPER)
 			scoreOfGame(t2)
-			fmt.Fprintf(w, "You = "+PAPER+" AI = "+t1+" State = "+t2)
-			fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
+			// fmt.Fprintf(w, "You = "+PAPER+" AI = "+t1+" State = "+t2)
+			// fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
+
+			tmplSettings, _ := template.ParseFiles("templates/gamePage/settings.html")
+			tmplSettings.Execute(w, user)
+
+			data := Score{
+				StateWINER:  stateWINER,
+				StateLOSSER: stateLOSSER,
+				StateDROW:   stateDRAW,
+			}
+			tmplStore, _ := template.ParseFiles("templates/gamePage/store.html")
+			tmplStore.Execute(w, data)
+
+			stateOf := struct {
+				State string
+			}{
+				State: t2,
+			}
+			tmplState, _ := template.ParseFiles("templates/gamePage/state.html")
+			tmplState.Execute(w, stateOf)
+
+			tmplGame, _ := template.ParseFiles("templates/gamePage/game.html")
+			tmplGame.Execute(w, data)
 		}
 	case SCISSORS:
 		{
-			t1, t2 := gameOne(SCISSORS)
+			_, t2 := gameOne(SCISSORS)
 			scoreOfGame(t2)
-			fmt.Fprintf(w, "You = "+SCISSORS+" AI = "+t1+" State = "+t2)
-			fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
+			// fmt.Fprintf(w, "You = "+SCISSORS+" AI = "+t1+" State = "+t2)
+			// fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
+
+			tmplSettings, _ := template.ParseFiles("templates/gamePage/settings.html")
+			tmplSettings.Execute(w, user)
+
+			data := Score{
+				StateWINER:  stateWINER,
+				StateLOSSER: stateLOSSER,
+				StateDROW:   stateDRAW,
+			}
+			tmplStore, _ := template.ParseFiles("templates/gamePage/store.html")
+			tmplStore.Execute(w, data)
+
+			stateOf := struct {
+				State string
+			}{
+				State: t2,
+			}
+			tmplState, _ := template.ParseFiles("templates/gamePage/state.html")
+			tmplState.Execute(w, stateOf)
+
+			tmplGame, _ := template.ParseFiles("templates/gamePage/game.html")
+			tmplGame.Execute(w, data)
 		}
 	default:
-        data := Score{
-            StateWINER:stateWINER,
-	        StateLOSSER:stateLOSSER,
-            StateDROW:stateDROW,
-        }
-        tmpl, _ := template.ParseFiles("templates/game.html")
-        tmpl.Execute(w, data)
+		tmplSettings, _ := template.ParseFiles("templates/gamePage/settings.html")
+		tmplSettings.Execute(w, user)
 
-		//fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
+		data := Score{
+			StateWINER:  stateWINER,
+			StateLOSSER: stateLOSSER,
+			StateDROW:   stateDRAW,
+		}
+
+		tmplStore, _ := template.ParseFiles("templates/gamePage/store.html")
+		tmplStore.Execute(w, data)
+
+		tmplGame, _ := template.ParseFiles("templates/gamePage/game.html")
+		tmplGame.Execute(w, data)
 	}
-
-	// if strings.Contains(parametrsOfRequest, "chose=rock") {
-	// 	t1, t2 := gameOne(ROCK)
-	// 	scoreOfGame(t2)
-	// 	fmt.Fprintf(w, "You = "+ROCK+" AI = "+t1+" State = "+t2)
-	// 	fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
-	// } else if strings.Contains(parametrsOfRequest, "chose=paper") {
-	// 	t1, t2 := gameOne(PAPER)
-	// 	scoreOfGame(t2)
-	// 	fmt.Fprintf(w, "You = "+PAPER+" AI = "+t1+" State = "+t2)
-	// 	fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
-	// } else if strings.Contains(parametrsOfRequest, "chose=scissors") {
-	// 	t1, t2 := gameOne(SCISSORS)
-	// 	scoreOfGame(t2)
-	// 	fmt.Fprintf(w, "You = "+SCISSORS+" AI = "+t1+" State = "+t2)
-	// 	fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
-	// } else {
-	// 	fmt.Fprintf(w, fmt.Sprintf("\n stateWINER = %d \n stateLOSSER = %d \n stateDROW %d \n", stateWINER, stateLOSSER, stateDROW))
-	// }
 }
 
 func clearCost(w http.ResponseWriter, r *http.Request) {
 	stateWINER = 0
 	stateLOSSER = 0
-	stateDROW = 0
+	stateDRAW = 0
+	http.Redirect(w, r, "/game", http.StatusMovedPermanently)
 }
 
 func rename(w http.ResponseWriter, r *http.Request) {
-	parametrsOfRequest := r.URL.RawQuery
-	strings.TrimPrefix(parametrsOfRequest, "name=")
+	if r.Method == http.MethodPost {
+		userName = r.FormValue("name")
+		// password := r.URL.Query().Get("password")
 
+		http.Redirect(w, r, "/game", http.StatusMovedPermanently)
+	} else if r.Method == http.MethodGet {
+		user := User{
+			UserName: userName,
+			Password: "123",
+		}
+		tmplRename, _ := template.ParseFiles("templates/rename.html")
+		tmplRename.Execute(w, user)
+	}
+	// parametrsOfRequest := r.URL.RawQuery
+	// strings.TrimPrefix(parametrsOfRequest, "name=")
 }
 
 func scoreOfGame(state string) {
@@ -144,7 +209,7 @@ func scoreOfGame(state string) {
 		stateLOSSER++
 	}
 	if state == DROW {
-		stateDROW++
+		stateDRAW++
 	}
 }
 
