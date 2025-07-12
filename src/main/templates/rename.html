@@ -3,26 +3,93 @@
     <head>
         <meta charset="UTF-8">
         <title>rock/paper/scissors</title>
+        <style>
+            .text{
+                    text-align: center;
+                    vertical-align: bottom ;
+                    font-size: 55px; 
+                    font-family:'COURIER'
+        }
+        .btn-new:hover {
+            top: 5px;
+        }
+        .btn {
+            border: none;
+            background-color: inherit;
+            cursor: pointer;
+            display: inline-block;
+            
+        } 
+        </style>
     </head>
     <body>
         <div align="center">
-            <h1>Date of user </h1>
-            <h2>Name: {{.UserName}}</h2>
+                <pre>
+ ____                                _                         __ 
+|  _ \ __ _ _ __ __ _ _ __ ___   ___| |_ ___ _ __ ___    ___  / _|
+| |_) / _` | '__/ _` | '_ ` _ \ / _ \ __/ _ \ '__/ __|  / _ \| |_ 
+|  __/ (_| | | | (_| | | | | | |  __/ ||  __/ |  \__ \ | (_) |  _|
+|_|   \__,_|_|  \__,_|_| |_| |_|\___|\__\___|_|  |___/  \___/|_|  
+ _   _ ___  ___ _ __                                              
+| | | / __|/ _ \ '__|                                             
+| |_| \__ \  __/ |                                                
+ \__,_|___/\___|_|                                                
+                </pre>
+            
+            <h1>
+<pre>??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+</pre>
+            </h1>
+            <pre>
+ _   _                      
+| \ | | __ _ _ __ ___   ___ 
+|  \| |/ _` | '_ ` _ \ / _ \
+| |\  | (_| | | | | | |  __/
+|_| \_|\__,_|_| |_| |_|\___|
+            </pre>
+            <div class="text"> {{.UserName}}</div>
         </div>
         <div align="center">
-            <h1>Change name</h1>
+            <pre>
+  ____ _                                                         
+ / ___| |__   __ _ _ __   __ _  ___   _ __   __ _ _ __ ___   ___ 
+| |   | '_ \ / _` | '_ \ / _` |/ _ \ | '_ \ / _` | '_ ` _ \ / _ \
+| |___| | | | (_| | | | | (_| |  __/ | | | | (_| | | | | | |  __/
+ \____|_| |_|\__,_|_| |_|\__, |\___| |_| |_|\__,_|_| |_| |_|\___|
+                         |___/                                   
+            </pre>
+        <div>
                 <form action="/rename" method="post">
-                <label for="name">Name:</label>
-                    <input  type="text" id="name" name="name" required>
+                <label class="text" for="name">NEW NAME:</label>
+                    <input class="text" type="text" id="name" name="name" required>
                 <br>
-                    <button type="submit">Submit</button>
+                <br>
+                    <button class="text" type="submit">Submit</button>
             </form>
         </div>
+            
+        </div>
+        <h1>
+
+<pre>))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+</pre>
+        </h1>
+
+        <a class="link" href="/clear" method="post">
+                        
+        </a>
 
         <div align="center">
-            <h1>Clear result</h1>
-            <form align="center" action="/clear" method="post">
-            <button type="submit">Clear</button>
+            <form class="btn-new" align="center" action="/clear" method="post">
+            <button class="btn"  type="submit">
+                <pre class="btn-new">
+  ____ _     _____    _    ____    ____  _____ ____  _   _ _   _____ 
+ / ___| |   | ____|  / \  |  _ \  |  _ \| ____/ ___|| | | | | |_   _|
+| |   | |   |  _|   / _ \ | |_) | | |_) |  _| \___ \| | | | |   | |  
+| |___| |___| |___ / ___ \|  _ <  |  _ <| |___ ___) | |_| | |___| |  
+ \____|_____|_____/_/   \_\_| \_\ |_| \_\_____|____/ \___/|_____|_|  
+                        </pre>
+            </button>
             </form>
         </div>
     </body>

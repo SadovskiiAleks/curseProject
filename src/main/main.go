@@ -187,7 +187,6 @@ func rename(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		userName = r.FormValue("name")
 		// password := r.URL.Query().Get("password")
-
 		http.Redirect(w, r, "/game", http.StatusMovedPermanently)
 	} else if r.Method == http.MethodGet {
 		user := User{

@@ -3,24 +3,66 @@
     <head>
         <meta charset="UTF-8">
         <title>rock/paper/scissors</title>
+        <style>
+        .textStore{
+                    text-align: center;
+                    vertical-align: middle ;
+                    font-size: 85px; 
+                    font-family:'COURIER'
+        }
+        </style>
     </head>
+    
     <body>
-        <div align="center">
-            <table border="1">
+        <div align="left">
+            <table  class="table">
             <thead>
                 <tr>
                     <th></th>
-                    <th>Winer</th>
-                    <th>Losser</th>
-                    <th>Drow</th>
+                    <th>
+                        <pre>
+__        ___                 
+\ \      / (_)_ __   ___ _ __ 
+ \ \ /\ / /| | '_ \ / _ \ '__|
+  \ V  V / | | | | |  __/ |   
+   \_/\_/  |_|_| |_|\___|_|   
+                            
+                        </pre>
+
+                    </th>
+                    <th>
+                        <pre>_                            
+| |    ___  ___ ___  ___ _ __ 
+| |   / _ \/ __/ __|/ _ \ '__|
+| |__| (_) \__ \__ \  __/ |   
+|_____\___/|___/___/\___|_|   
+                            
+                        </pre>
+
+                    </th>
+                    <th>
+                        <pre>____                    
+|  _ \ _ __ _____      __
+| | | | '__/ _ \ \ /\ / /
+| |_| | | | (_) \ V  V / 
+|____/|_|  \___/ \_/\_/  
+                        </pre>
+
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Store</td>
-                    <td>{{ .StateWINER}}</td>
-                    <td>{{ .StateLOSSER}}</td>
-                    <td>{{ .StateDROW}}</td>
+                    <td><pre> ____  _                 
+/ ___|| |_ ___  _ __ ___ 
+\___ \| __/ _ \| '__/ _ \
+ ___) | || (_) | | |  __/
+|____/ \__\___/|_|  \___|
+                        </pre>
+                    </td>
+                    <td class="textStore">{{ .StateWINER}}</td>
+                    <td class="textStore">{{ .StateLOSSER}}</td>
+                    <td class="textStore">{{ .StateDROW}}</td>
                 </tr>
             </tbody>
         </table>
